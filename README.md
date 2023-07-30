@@ -31,7 +31,8 @@
 ## Memory Allocation
    |Sno:| allocation Method  |  Code          |
 |----| ------------- | ------------- |
-|1   | First Fit | [code](alloc/ff.c)          |  
+|1   | First Fit | [code](alloc/ff.c)          |
+|2   | Best Fit | [code](alloc/bf.c)          |  
 
 ## Page replacement Algorithms
    |Sno:| Replacement Algorithm   |  Code          |
