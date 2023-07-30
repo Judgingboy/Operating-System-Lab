@@ -1,55 +1,45 @@
 #include <stdio.h>
-int main()
+#include <conio.h>
+#define max 25
+void main()
 {
-   int block[50], //for storing the block size
-       data[50], // for storing the data size
-       nb,nd, // for storing the number of data and blocks respectivey 
-       temp,  // for storing the fragment temporarily 
-       b_order[50], // for storing the order of allocation of blocks
-       fragments[50]; // for storing the fragment
-
-   printf("Enter the number of blocks: ");
-   scanf("%d",&nb);
-   printf("Enter the block Sizes: \n");
-   for(int i=0;i<nb;i++)
-   {
-     printf("Block %d: ",i+1);
-     scanf("%d",&block[i]);
-   }
-
-   int allocated[50]; // for checking wether a data is allocated or not.
-
-   printf("Enter the number of data: ");
-   scanf("%d",&nd);
-   printf("Enter the data Sizes: \n");
-   for(int i=0;i<nd;i++)
-   {
-     printf("Data %d: ",i+1);
-     scanf("%d",&data[i]);
-   }
-
-   for(int i=0;i<nd;i++)
-   {
-     for(int j=0;j<nb;j++)
-     {
-        if(allocated[i]!=1)
+    int frag[max], b[max], f[max], i, j, nb, nf, temp;
+    static int bf[max], ff[max];
+    printf("\nEnter the number of blocks:");
+    scanf("%d", &nb);
+    printf("Enter the number of files:");
+    scanf("%d", &nf);
+    printf("\nEnter the size of the blocks:-\n");
+    for (i = 1; i <= nb; i++)
+    {
+        printf("Block %d:", i);
+        scanf("%d", &b[i]);
+    }
+    printf("Enter the size of the files:-\n");
+    for (i = 1; i <= nf; i++)
+    {
+        printf("File %d:", i);
+        scanf("%d", &f[i]);
+    }
+    for (i = 1; i <= nf; i++)
+    {
+        for (j = 1; j <= nb; j++)
         {
-           temp = block[j]-data[i];
-           if(temp>=0)
-           {
-              b_order[i] = j;
-              allocated[b_order[i]] = 1;
-           }
+            if (bf[j] != 1)
+            {
+                temp = b[j] - f[i];
+                if (temp >= 0)
+                {
+                    ff[i] = j;
+                    break;
+                }
+            }
         }
-     }
-     fragments[i] = temp;
-   }
-
-   printf("\ndataNo:\tDataSize:\tAllocated In\tBlockSize:\tfragments");
-
-   for(int i=0;i<nb;i++)
-   {
-      printf("\n%d.\t%dkb\t\tBlock:%d\t\t%dkb\t\t%dkb",i+1,data[i],b_order[i]+1,block[b_order[i]],fragments[i]);
-   }   
-
-}
+        frag[i] = temp;
+        bf[ff[i]] = 1;
+    }
+    printf("\nFile_no:\tFile_size :\tBlock_no:\
+tBlock_size:\tFragment");
+    for (i = 1; i <= nf; i++)
+        printf("\n%d\t\t%d\t\t%d\t\t%d\t\t%d", i, f[i], ff[i], b[ff[i]], frag[i]);
+} 
